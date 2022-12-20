@@ -84,6 +84,11 @@ public class GameManager : MonoBehaviour
         }  
     }
 
+    public void StartVoting()
+    {
+        Application.OpenURL("https://music.yandex.ru/");
+    }
+
     public void Quit()
     {
         #if UNITY_EDITOR
