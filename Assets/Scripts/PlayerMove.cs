@@ -10,12 +10,17 @@ public class PlayerMove : MonoBehaviour
     private float _oldMousePositionX;
     private float _oldMousePositionY;
     private float _eulerY;
-    
+
+    private float fieldOfView;
+
     private GameObject viewManager;
+    private Camera viewCamera;
 
     private void Awake()
     {
         viewManager = GameObject.Find("/Cameras/View");
+        viewCamera = GameObject.Find("/Cameras/View/View").GetComponent<Camera>();
+
         Rotation(true);
     }
 
@@ -40,9 +45,6 @@ public class PlayerMove : MonoBehaviour
             float deltaX = Input.mousePosition.x - _oldMousePositionX;
             float deltaY = Input.mousePosition.y - _oldMousePositionY;
             
-            Debug.Log(deltaX);
-            Debug.Log(deltaY);
-
             if (deltaX > 0)
             {
                 _eulerY += deltaX;
@@ -60,14 +62,26 @@ public class PlayerMove : MonoBehaviour
             }
 
             //_oldMousePositionX = Input.mousePosition.x;
-
-            
-
         }
 
         if (Input.GetMouseButtonUp(0))
         {
            Rotation(true);
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+        if (scroll != 0.0f)
+        {
+            
+
+            fieldOfView = viewCamera.fieldOfView;
+
+            fieldOfView += scroll * 10f;
+
+            fieldOfView = Mathf.Clamp(fieldOfView, 10f, 25f);
+
+            viewCamera.fieldOfView = fieldOfView;
         }
     }
     private void Rotation(bool status)
@@ -88,6 +102,7 @@ public class PlayerMove : MonoBehaviour
         {
             _eulerY = oldPosition.y - 0.5f * Time.deltaTime;
         }
+
         viewManager.transform.position = new Vector3(viewManager.transform.position.x, Mathf.Clamp(_eulerY, -2f, 0f), viewManager.transform.position.z);
 
     }

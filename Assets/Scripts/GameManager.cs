@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 public class GameManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] MenuSelector menuSelector;
     [SerializeField] GameObject Cameras;
     [SerializeField] GameObject MenuConvas;
-    [SerializeField] GameObject CreatorText;
+    [SerializeField] public TextMeshProUGUI CreatorText;
 
     private GameObject menuCanvas;
     private GameObject menuManager;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
     private GameObject gameManager;
 
     public int appMode;
+    private GameObject creatorName;
 
     // Update is called once per frame
     private void Awake()
@@ -30,53 +32,58 @@ public class GameManager : MonoBehaviour
         
         gameCanvas = GameObject.Find("/Menu Convas/Game");
         gameManager = GameObject.Find("/Cameras/Game");
+        
     }
 
     private void Start()
     {
         appMode = 0;
-        SwitchingMode(appMode);
+        //SwitchingMode(appMode);
     }
     void Update()
     {
         
     }
 
-    public void SwitchingMode(int modeIndex)
-    {
-        switch (modeIndex)
-        {
-            case 0:
-                menuManager.SetActive(true);
-                menuCanvas.SetActive(true);
-                viewManager.SetActive(false);
-                viewCanvas.SetActive(false);
-                gameManager.SetActive(false);
-                gameCanvas.SetActive(false);
-                break;
-            case 1:
-                menuManager.SetActive(false);
-                menuCanvas.SetActive(false);
-                viewManager.SetActive(false);
-                viewCanvas.SetActive(false);
-                gameManager.SetActive(true);
-                gameCanvas.SetActive(true);
-                break;  
-            case 2:
-                menuManager.SetActive(false);
-                menuCanvas.SetActive(false);
-                viewManager.SetActive(true);
-                viewCanvas.SetActive(true);
-                gameManager.SetActive(false);
-                gameCanvas.SetActive(false);
-                break;
-        }
-    }
+    //public void SwitchingMode(int modeIndex)
+    //{
+    //    switch (modeIndex)
+    //    {
+    //        case 0:
+    //            menuManager.SetActive(true);
+    //            menuCanvas.SetActive(true);
+    //            viewManager.SetActive(false);
+    //            viewCanvas.SetActive(false);
+    //            gameManager.SetActive(false);
+    //            gameCanvas.SetActive(false);
+    //            break;
+    //        case 1:
+    //            menuManager.SetActive(false);
+    //            menuCanvas.SetActive(false);
+    //            viewManager.SetActive(false);
+    //            viewCanvas.SetActive(false);
+    //            gameManager.SetActive(true);
+    //            gameCanvas.SetActive(true);
+    //            break;  
+    //        case 2:
+    //            menuManager.SetActive(false);
+    //            menuCanvas.SetActive(false);
+    //            viewManager.SetActive(true);
+    //            viewCanvas.SetActive(true);
+    //            gameManager.SetActive(false);
+    //            gameCanvas.SetActive(false);
+    //            break;
+    //    }
+    //}
 
     public void ShowName(string Name, bool status)
     {
-        //CreatorText.GetComponent<Text>.
+        if (status == true)
+        {
+            CreatorText.text = Name;
+        }  
     }
+
     public void Quit()
     {
         #if UNITY_EDITOR
