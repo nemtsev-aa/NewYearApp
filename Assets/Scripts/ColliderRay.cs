@@ -17,6 +17,7 @@ public class ColliderRay : MonoBehaviour
     private TextMeshProUGUI creatorText;
     private Camera viewCamera;
     private Outline outline;
+    private int appMode;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class ColliderRay : MonoBehaviour
         gameManager = GameObject.Find("GameManager");
         creatorText = gameManager.GetComponent<GameManager>().CreatorText;
         outline = transform.GetComponent<Outline>();
+
     }
 
     void Update()
@@ -32,26 +34,30 @@ public class ColliderRay : MonoBehaviour
         Ray ray = viewCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (GetComponent<Collider>().Raycast(ray, out hit, 100f))
+        appMode = gameManager.GetComponent<GameManager>().appMode;
+        
+        if (appMode == 2)
         {
-            creatorText.text = creatorName.ToString();
-
-            outline.enabled = true;
-
-            if (transform.localScale.x < 1f)
+            if (GetComponent<Collider>().Raycast(ray, out hit, 100f))
             {
-                transform.localScale = Vector3.one * 0.2f;
+                creatorText.text = creatorName.ToString();
+
+                outline.enabled = true;
+
+                if (transform.localScale.x < 1f)
+                {
+                    transform.localScale = Vector3.one * 0.2f;
+                }
+                else
+                {
+                    transform.localScale = Vector3.one * 2f;
+                }
             }
             else
             {
-                transform.localScale = Vector3.one * 2f;
-            }  
-        }
-        else
-        {
-            outline.enabled = false;
-            transform.localScale = Vector3.one * 1f;
-        }
-        
+                outline.enabled = false;
+                transform.localScale = Vector3.one * 1f;
+            }
+        } 
     }
 }

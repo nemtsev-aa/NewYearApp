@@ -13,6 +13,8 @@ public class BulletCreator : MonoBehaviour
         {
             GameObject newBullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             newBullet.GetComponent<Rigidbody>().velocity = transform.forward * BulletVelocity;
+            
+            Destroy(newBullet, 5f);
         }
     }
 

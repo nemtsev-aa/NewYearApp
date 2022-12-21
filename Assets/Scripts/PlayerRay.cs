@@ -5,16 +5,20 @@ using UnityEngine;
 public class PlayerRay : MonoBehaviour
 {
     public Transform Pointer;
+    public Camera gameCamera;
+
     // Update is called once per frame
     void Update()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
-        Debug.DrawRay(transform.position, transform.forward*100f, Color.yellow);
+        //Ray ray = gameCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(gameCamera.transform.position, gameCamera.transform.forward);
+        Debug.DrawRay(gameCamera.transform.position, gameCamera.transform.forward * 7f, Color.yellow);
 
         RaycastHit hit;
-        if (Physics.Raycast(ray,out hit))
+        if (Physics.Raycast(ray, out hit))
         {
             Pointer.position = hit.point;
+            //Debug.DrawRay(gameCamera.transform.position, hit.point, Color.yellow);
         }
     }
 }

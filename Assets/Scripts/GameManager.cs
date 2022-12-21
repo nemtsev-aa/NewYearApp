@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
+[ExecuteInEditMode]
 public class GameManager : MonoBehaviour
 {
     //[SerializeField] MenuSelector menuSelector;
@@ -11,70 +11,63 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject MenuConvas;
     [SerializeField] public TextMeshProUGUI CreatorText;
 
-    private GameObject menuCanvas;
-    private GameObject menuManager;
+    private GameObject[] Manager = new GameObject[0];
+    private GameObject[] Canvas = new GameObject[0];
 
-    private GameObject viewCanvas;
-    private GameObject viewManager;
-
-    private GameObject gameCanvas;
-    private GameObject gameManager;
-
+    [Range(0, 2)]
     public int appMode;
-    private GameObject creatorName;
 
     // Update is called once per frame
     private void Awake()
     {
-        menuCanvas = GameObject.Find("/Menu Convas/Menu");
-        viewCanvas = GameObject.Find("/Menu Convas/View");
-        viewManager = GameObject.Find("/Cameras/View");
-        
-        gameCanvas = GameObject.Find("/Menu Convas/Game");
-        gameManager = GameObject.Find("/Cameras/Game");
-        
+        int i = 0;
+
+        //Array to hold all child obj
+        Manager = new GameObject[Cameras.transform.childCount];
+        Canvas = new GameObject[MenuConvas.transform.childCount];
+
+        //Find all child obj and store to that array
+        foreach (Transform child in Cameras.transform)
+        {
+            Manager[i] = child.gameObject;
+            i += 1;
+        }
+
+        i = 0;
+        foreach (Transform child in MenuConvas.transform)
+        {
+            Canvas[i] = child.gameObject;
+            i += 1;
+        }
     }
 
     private void Start()
     {
-        appMode = 0;
-        //SwitchingMode(appMode);
+        SwitchingMode(0);
     }
-    void Update()
+    private void Update()
     {
-        
+        SwitchingMode(appMode);
     }
 
-    //public void SwitchingMode(int modeIndex)
-    //{
-    //    switch (modeIndex)
-    //    {
-    //        case 0:
-    //            menuManager.SetActive(true);
-    //            menuCanvas.SetActive(true);
-    //            viewManager.SetActive(false);
-    //            viewCanvas.SetActive(false);
-    //            gameManager.SetActive(false);
-    //            gameCanvas.SetActive(false);
-    //            break;
-    //        case 1:
-    //            menuManager.SetActive(false);
-    //            menuCanvas.SetActive(false);
-    //            viewManager.SetActive(false);
-    //            viewCanvas.SetActive(false);
-    //            gameManager.SetActive(true);
-    //            gameCanvas.SetActive(true);
-    //            break;  
-    //        case 2:
-    //            menuManager.SetActive(false);
-    //            menuCanvas.SetActive(false);
-    //            viewManager.SetActive(true);
-    //            viewCanvas.SetActive(true);
-    //            gameManager.SetActive(false);
-    //            gameCanvas.SetActive(false);
-    //            break;
-    //    }
-    //}
+    public void SwitchingMode(int modeIndex)
+    {
+        appMode = modeIndex;
+
+        for (int i = 0; i < Cameras.transform.childCount; i++)
+        {
+            if (i == modeIndex)
+            {
+                Canvas[i].SetActive(true);
+                Manager[i].SetActive(true);
+            }
+            else
+            {
+                Canvas[i].SetActive(false);
+                Manager[i].SetActive(false);
+            }
+        }
+    }
 
     public void ShowName(string Name, bool status)
     {
@@ -84,9 +77,17 @@ public class GameManager : MonoBehaviour
         }  
     }
 
-    public void StartVoting()
+    public void StartVoting(int variant)
     {
-        Application.OpenURL("https://music.yandex.ru/");
+        if (variant == 1)
+        {
+            Application.OpenURL("https://vk.com/club209176624");
+        }
+        else if (variant == 2)
+        {
+            Application.OpenURL("");
+        }
+        
     }
 
     public void Quit()
