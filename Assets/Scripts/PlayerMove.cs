@@ -25,7 +25,6 @@ public class PlayerMove : MonoBehaviour
     void LateUpdate()
     {
         
-
         if (Input.GetMouseButtonDown(0))
         {
             _oldMousePositionX = Input.mousePosition.x;
@@ -42,8 +41,7 @@ public class PlayerMove : MonoBehaviour
             Debug.Log(deltaY);
 
             if (Mathf.Abs(deltaX) > 10f)
-            {
-                
+            {   
                 Rotation(deltaX * 0.7f);
             }
            
@@ -87,6 +85,7 @@ public class PlayerMove : MonoBehaviour
     public void UpMove(bool status)
     {
         Vector3 oldPosition = viewManager.transform.position;
+        
         if (status)
         {
             _eulerY = oldPosition.y + 0.5f * Time.deltaTime;

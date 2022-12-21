@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float bulletLife = 2;
     private bool IsActive = true;
     public GameObject markPrefab;
 
@@ -18,13 +19,17 @@ public class Bullet : MonoBehaviour
         Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         if (enemy)
         {
+            Vector3 position = collision.contacts[0].point;
+            Quaternion rotation = Quaternion.LookRotation(collision.contacts[0].normal);
+            Instantiate(markPrefab, position, rotation);
+
+            Destroy(gameObject);
+
             enemy.OnHit();
         }
-
-        Vector3 position = collision.contacts[0].point;
-        Quaternion rotation = Quaternion.LookRotation(collision.contacts[0].normal);
-        Instantiate(markPrefab, position, rotation);
-        
-        Destroy(gameObject, 3f);
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
