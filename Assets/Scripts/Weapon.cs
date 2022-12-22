@@ -7,9 +7,13 @@ public class Weapon : MonoBehaviour
     public GameObject bullet;
     public Camera mainCamera;
     public Transform spawnBullet;
+    
+
 
     public float shootForce;
     public float spread;
+
+    
 
     void Update()
     {
@@ -17,7 +21,7 @@ public class Weapon : MonoBehaviour
             Shoot();
     }
 
-    private void Shoot()
+    public void Shoot()
     {
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -40,5 +44,7 @@ public class Weapon : MonoBehaviour
         currentBullet.transform.forward = dirWithSpread.normalized;
 
         currentBullet.GetComponent<Rigidbody>().AddForce(dirWithSpread.normalized * shootForce, ForceMode.Impulse);
-    }
+
+        Destroy(currentBullet, 2f);
+    } 
 }

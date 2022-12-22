@@ -7,10 +7,14 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     //[SerializeField] MenuSelector menuSelector;
+    [SerializeField] GameObject Room;
     [SerializeField] GameObject Cameras;
     [SerializeField] GameObject MenuConvas;
     [SerializeField] public TextMeshProUGUI CreatorText;
+    
+    public List<GameObject> createToyList;
 
+    private GameObject[] Tree = new GameObject[0];
     private GameObject[] Manager = new GameObject[0];
     private GameObject[] Canvas = new GameObject[0];
 
@@ -23,10 +27,20 @@ public class GameManager : MonoBehaviour
         int i = 0;
 
         //Array to hold all child obj
+        Tree = new GameObject[Room.transform.childCount];
         Manager = new GameObject[Cameras.transform.childCount];
         Canvas = new GameObject[MenuConvas.transform.childCount];
 
         //Find all child obj and store to that array
+        foreach (Transform child in Room.transform)
+        {
+            Tree[i] = child.gameObject;
+            Debug.Log(Tree[i].gameObject.name.ToString());
+            i += 1;
+        }
+
+        i = 0;
+
         foreach (Transform child in Cameras.transform)
         {
             Manager[i] = child.gameObject;
@@ -39,6 +53,8 @@ public class GameManager : MonoBehaviour
             Canvas[i] = child.gameObject;
             i += 1;
         }
+
+
     }
 
     private void Start()
@@ -67,6 +83,17 @@ public class GameManager : MonoBehaviour
                 Manager[i].SetActive(false);
             }
         }
+
+        if (modeIndex==1)
+        {
+            Tree[0].SetActive(true);
+            Tree[1].SetActive(false);
+        }
+        else
+        {
+            Tree[0].SetActive(false);
+            Tree[1].SetActive(true);
+        }
     }
 
     public void ShowName(string Name, bool status)
@@ -74,7 +101,7 @@ public class GameManager : MonoBehaviour
         if (status == true)
         {
             CreatorText.text = Name;
-        }  
+        }
     }
 
     public void StartVoting(int variant)
@@ -87,15 +114,39 @@ public class GameManager : MonoBehaviour
         {
             Application.OpenURL("");
         }
-        
+
     }
+    public void ShowBullet(bool status)
+    {
+        foreach (GameObject item in createToyList)
+        {
+            item.gameObject.SetActive(status);
+        }
+    }
+
+    public void DestroyAllBullet()
+    {
+        foreach (GameObject item in createToyList)
+        {
+            Destroy(item.gameObject);
+        }
+
+        createToyList.Clear();
+    }
+
+    public void AddToyToCollection(GameObject newToy)
+    {
+        createToyList.Add(newToy);
+    }
+
+
 
     public void Quit()
     {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#else
 		Application.Quit();
-        #endif
+#endif
     }
 }
