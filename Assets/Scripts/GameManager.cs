@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Cameras;
     [SerializeField] GameObject MenuConvas;
     [SerializeField] public TextMeshProUGUI CreatorText;
-    
+    [SerializeField] public TextMeshProUGUI selectionToyIndex;
+
     public List<GameObject> createToyList;
 
     private GameObject[] Tree = new GameObject[0];
@@ -53,8 +54,6 @@ public class GameManager : MonoBehaviour
             Canvas[i] = child.gameObject;
             i += 1;
         }
-
-
     }
 
     private void Start()
@@ -102,6 +101,10 @@ public class GameManager : MonoBehaviour
         {
             CreatorText.text = Name;
         }
+    }
+    public void ShowIndex(int index)
+    {
+       selectionToyIndex.text = index.ToString();
     }
 
     public void StartVoting(int variant)
