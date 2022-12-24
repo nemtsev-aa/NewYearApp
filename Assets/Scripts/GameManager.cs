@@ -22,6 +22,9 @@ public class GameManager : MonoBehaviour
     [Range(0, 2)]
     public int appMode;
 
+    private GameObject toysContent;
+
+
     // Update is called once per frame
     private void Awake()
     {
@@ -102,6 +105,7 @@ public class GameManager : MonoBehaviour
             CreatorText.text = Name;
         }
     }
+    
     public void ShowIndex(int index)
     {
        selectionToyIndex.text = index.ToString();
