@@ -6,20 +6,10 @@ public class Weapon : MonoBehaviour
 {
     public GameObject bullet;
     public Camera mainCamera;
-    public Transform spawnBullet;
     
-
-
     public float shootForce;
     public float spread;
-
-    
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-            Shoot();
-    }
+    private GameObject selectionBullet;
 
     public void Shoot()
     {
@@ -32,19 +22,21 @@ public class Weapon : MonoBehaviour
         else
             targetPoint = ray.GetPoint(75);
 
-        Vector3 dirWithoutSpread = targetPoint - spawnBullet.position;
+        Vector3 dirWithoutSpread = targetPoint - transform.position;
 
         float x = Random.Range(-spread, spread);
         float y = Random.Range(-spread, spread);
 
         Vector3 dirWithSpread = dirWithoutSpread + new Vector3(x, y, 0);
+        selectionBullet = bullet;
 
-        GameObject currentBullet = Instantiate(bullet, spawnBullet.position, Quaternion.identity);
+        GameObject currentBullet = Instantiate(selectionBullet, transform.position, Quaternion.identity);
+        
 
-        currentBullet.transform.forward = dirWithSpread.normalized;
+        //currentBullet.transform.forward = dirWithSpread.normalized;
 
-        currentBullet.GetComponent<Rigidbody>().AddForce(dirWithSpread.normalized * shootForce, ForceMode.Impulse);
+        //currentBullet.GetComponent<Rigidbody>().AddForce(dirWithSpread.normalized * shootForce, ForceMode.Impulse);
 
-        Destroy(currentBullet, 2f);
+        //Destroy(currentBullet, 2f);
     } 
 }

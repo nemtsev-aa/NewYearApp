@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    
-    public float bulletLife = 2;
+    public float bulletLife = 5f;
     private bool IsActive = true;
     public GameObject markPrefab;
     private GameManager Manager;
+    
     private void Start()
     {
         Manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (!IsActive) return;
@@ -27,16 +28,12 @@ public class Bullet : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(collision.contacts[0].normal);
             GameObject newToy = Instantiate(markPrefab, position, rotation);
 
-            
             Manager.createToyList.Add(newToy);
-
-            Destroy(gameObject);
-
-            enemy.OnHit();
+            //Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
 }

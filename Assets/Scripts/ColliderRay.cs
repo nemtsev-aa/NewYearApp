@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum CreatorName { Иван, Артём, Софья, Вероника, Дарья, Алёна, Елена, Константин, Кирилл, Глеб }
+public enum CreatorName { РРІР°РЅ, РђСЂС‚С‘Рј, РЎРѕС„СЊСЏ, Р’РµСЂРѕРЅРёРєР°, РђР»С‘РЅР°, Р•Р»РµРЅР°, Р®Р»РёСЏ, РђР»РµРєСЃР°РЅРґСЂ, РќРёРєРѕР»Р°Р№, РђРЅРґСЂРµР№ }
 
 public class ColliderRay : MonoBehaviour
 {
