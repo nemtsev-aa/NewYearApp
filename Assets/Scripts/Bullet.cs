@@ -28,6 +28,9 @@ public class Bullet : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(collision.contacts[0].normal);
             GameObject newToy = Instantiate(markPrefab, position, rotation);
 
+            //замораживаем снаряд
+            Destroy(newToy.GetComponent<Rigidbody>());
+
             Manager.createToyList.Add(newToy);
             Destroy(gameObject);
         }

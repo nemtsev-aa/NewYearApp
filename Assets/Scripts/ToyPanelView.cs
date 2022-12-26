@@ -11,8 +11,8 @@ public class ToyPanelView : MonoBehaviour
 	
 	private GameObject[] ToysPanels = new GameObject[0];
 	public GameObject[] ToysPanelsImage = new GameObject[0];
-	public GameObject[] ToysPanelsPrefabs = new GameObject[0];
-	public GameObject[] BulletPrefabs = new GameObject[0];
+	//public GameObject[] ToysPanelsPrefabs = new GameObject[0];
+	public GameObject[] BulletPrefabs;
 
 	private Weapon weapon;
 
@@ -24,17 +24,13 @@ public class ToyPanelView : MonoBehaviour
 		int ToysContentCount = ToysContent.transform.childCount;
 		ToysPanels = new GameObject[ToysContentCount];
 		ToysPanelsImage = new GameObject[ToysContentCount];
-		ToysPanelsPrefabs = new GameObject[ToysContentCount];
-		BulletPrefabs = new GameObject[ToysContentCount];
+		//ToysPanelsPrefabs = new GameObject[ToysContentCount];
+		BulletPrefabs = BulletCreator.GetComponent<Weapon>().BulletPrefabs;
 
 		for (int i = 0; i < ToysContentCount; i++)
         {
 			GameObject child = ToysContent.transform.GetChild(i).gameObject;
 			ToysPanels[i] = child;
-
-			GameObject pref = BulletCreator.transform.GetChild(i).gameObject;
-			BulletPrefabs[i] = pref;
-
 			
             for (int index = 0; index  < child.transform.childCount; index ++)
             {
@@ -53,7 +49,6 @@ public class ToyPanelView : MonoBehaviour
 						Debug.Log(indexOfChar);
 						if (indexOfChar == 0)
 						{
-							
 							ToysPanelsImage[i] = childObj;
 							defaultColor = childObj.GetComponent<Image>().color;
 							continue;
@@ -65,16 +60,15 @@ public class ToyPanelView : MonoBehaviour
 						Debug.Log(indexOfChar);
 						if (indexOfChar == 0)
 						{
-							ToysPanelsPrefabs[i] = childObj;
+							//ToysPanelsPrefabs[i] = childObj;
 							continue;
 						}
 						break;
 				}
             }
-
         }
 		Debug.Log("ToysPanelsImage " + ToysPanelsImage.Length);
-		Debug.Log("ToysPanelsPrefabs " + ToysPanelsPrefabs.Length);
+		//Debug.Log("ToysPanelsPrefabs " + ToysPanelsPrefabs.Length);
 		Debug.Log("BulletPrefabs " + BulletPrefabs.Length);
 	}
 
@@ -89,14 +83,11 @@ public class ToyPanelView : MonoBehaviour
 		GameObject toyPrefab;
 	    for (int i = 0; i < ToysPanelsImage.Length; i++)
         {
-			GameObject tpi = ToysPanelsImage[i].gameObject;
-			Debug.Log("Image " + tpi.name);
-
 			Image = ToysPanelsImage[i].transform.GetComponentInChildren<Image>();
 			Image.color = defaultColor;
 			Image.transform.localScale = Vector3.one * 1.0f;
 
-			toyPrefab = ToysPanelsPrefabs[i];
+			toyPrefab = BulletPrefabs[i];
 			toyPrefab.SetActive(false);
 		}
 
@@ -104,18 +95,18 @@ public class ToyPanelView : MonoBehaviour
 		Image.color = Color.yellow;
 		Image.transform.localScale = Vector3.one * 1.1f;
 
-		toyPrefab = ToysPanelsPrefabs[index];
+		toyPrefab = BulletPrefabs[index];
 		toyPrefab.SetActive(true);
 
 		SelectionBullet(index);
 	}
 
-	public void SelectionBullet(int index){
-				
+	public void SelectionBullet(int index)
+	{		
 		weapon = BulletCreator.GetComponent<Weapon>();
 
 		weapon.enabled = true;
-		weapon.bullet = BulletPrefabs[index];
+		weapon.selectionBullet = BulletPrefabs[index];
 		weapon.enabled = false;
 
 		BulletPrefabs[index].SetActive(true);

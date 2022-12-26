@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     private GameObject[] Manager = new GameObject[0];
     private GameObject[] Canvas = new GameObject[0];
 
-    [Range(0, 2)]
+    [Range(0, 3)]
     public int appMode;
 
     private GameObject toysContent;
@@ -90,11 +90,22 @@ public class GameManager : MonoBehaviour
         {
             Tree[0].SetActive(true);
             Tree[1].SetActive(false);
+            
         }
         else
         {
             Tree[0].SetActive(false);
             Tree[1].SetActive(true);
+            
+        }
+
+        if (modeIndex == 0)
+        {
+            Tree[2].SetActive(true);
+        }
+        else
+        {
+            Tree[2].SetActive(false);
         }
     }
 
@@ -145,8 +156,6 @@ public class GameManager : MonoBehaviour
     {
         createToyList.Add(newToy);
     }
-
-
 
     public void Quit()
     {
