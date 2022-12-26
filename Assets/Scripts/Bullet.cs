@@ -29,11 +29,11 @@ public class Bullet : MonoBehaviour
             GameObject newToy = Instantiate(markPrefab, position, rotation);
 
             Manager.createToyList.Add(newToy);
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
     }
 }

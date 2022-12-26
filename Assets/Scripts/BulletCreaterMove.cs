@@ -101,7 +101,7 @@ namespace Eccentric {
     
         public void ResetCameraPosition()
         {
-            transform.position =startCameraPosition;
+            transform.position = startCameraPosition;
             transform.rotation = startCameraRotation;
         }
     }

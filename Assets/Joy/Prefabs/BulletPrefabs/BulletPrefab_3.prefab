@@ -11,10 +11,11 @@ GameObject:
   - component: {fileID: 416706}
   - component: {fileID: 3300916}
   - component: {fileID: 2376828}
-  - component: {fileID: 2950295489347417327}
-  - component: {fileID: 4473056588508533392}
+  - component: {fileID: 6012792424854817514}
+  - component: {fileID: -1174327287032490626}
+  - component: {fileID: -7392512164251555729}
   m_Layer: 0
-  m_Name: Christmas_Ball_02 1
+  m_Name: BulletPrefab_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f3ea2db833264749b039fbc1beaf81e, type: 2}
+  - {fileID: 2100000, guid: 003d6ed9665b2364a94730716242708e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -85,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!54 &2950295489347417327
+--- !u!54 &6012792424854817514
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,7 +102,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &4473056588508533392
+--- !u!135 &-1174327287032490626
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,3 +115,17 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.14470246
   m_Center: {x: 0, y: 0, z: 0.000000007450581}
+--- !u!114 &-7392512164251555729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9befd00dea13cb40b9e025be77c4860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletLife: 5
+  markPrefab: {fileID: 161598}

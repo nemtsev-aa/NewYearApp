@@ -10,8 +10,10 @@ public class ToyPanelView : MonoBehaviour
 	[SerializeField] GameObject BulletCreator;
 	
 	private GameObject[] ToysPanels = new GameObject[0];
-	private GameObject[] ToysPanelsImage = new GameObject[0];
-	private GameObject[] ArrayPrefabs = new GameObject[0];
+	public GameObject[] ToysPanelsImage = new GameObject[0];
+	public GameObject[] ToysPanelsPrefabs = new GameObject[0];
+	public GameObject[] BulletPrefabs = new GameObject[0];
+
 	private Weapon weapon;
 
 	private Color defaultColor;
@@ -22,26 +24,58 @@ public class ToyPanelView : MonoBehaviour
 		int ToysContentCount = ToysContent.transform.childCount;
 		ToysPanels = new GameObject[ToysContentCount];
 		ToysPanelsImage = new GameObject[ToysContentCount];
-		ArrayPrefabs = new GameObject[ToysContentCount];
+		ToysPanelsPrefabs = new GameObject[ToysContentCount];
+		BulletPrefabs = new GameObject[ToysContentCount];
 
-        for (int i = 0; i < ToysContentCount; i++)
+		for (int i = 0; i < ToysContentCount; i++)
         {
 			GameObject child = ToysContent.transform.GetChild(i).gameObject;
 			ToysPanels[i] = child;
 
 			GameObject pref = BulletCreator.transform.GetChild(i).gameObject;
-			ArrayPrefabs[i] = pref;
-            
-            foreach (Transform iImage in child.transform)
+			BulletPrefabs[i] = pref;
+
+			
+            for (int index = 0; index  < child.transform.childCount; index ++)
             {
-                if (iImage.name == "Backgroung")
+				GameObject childObj = child.transform.GetChild(index).gameObject;
+				Debug.Log(childObj.name);
+
+				string s1 = childObj.name;
+				string ch;
+				int indexOfChar;
+
+				switch (index)
                 {
-                    ToysPanelsImage[i] = iImage.gameObject;
-					defaultColor = iImage.gameObject.GetComponent<Image>().color;
-                    continue;
-                }
+					case 0:
+						ch = "Backgroung";
+						indexOfChar = s1.IndexOf(ch);
+						Debug.Log(indexOfChar);
+						if (indexOfChar == 0)
+						{
+							
+							ToysPanelsImage[i] = childObj;
+							defaultColor = childObj.GetComponent<Image>().color;
+							continue;
+						}
+						break;
+					case 2:
+						ch = "MenuJoy";
+						indexOfChar = s1.IndexOf(ch);
+						Debug.Log(indexOfChar);
+						if (indexOfChar == 0)
+						{
+							ToysPanelsPrefabs[i] = childObj;
+							continue;
+						}
+						break;
+				}
             }
+
         }
+		Debug.Log("ToysPanelsImage " + ToysPanelsImage.Length);
+		Debug.Log("ToysPanelsPrefabs " + ToysPanelsPrefabs.Length);
+		Debug.Log("BulletPrefabs " + BulletPrefabs.Length);
 	}
 
 	void Start() {
@@ -55,17 +89,23 @@ public class ToyPanelView : MonoBehaviour
 		GameObject toyPrefab;
 	    for (int i = 0; i < ToysPanelsImage.Length; i++)
         {
-            Image = ToysPanelsImage[i].transform.GetComponentInChildren<Image>();
+			GameObject tpi = ToysPanelsImage[i].gameObject;
+			Debug.Log("Image " + tpi.name);
+
+			Image = ToysPanelsImage[i].transform.GetComponentInChildren<Image>();
 			Image.color = defaultColor;
 			Image.transform.localScale = Vector3.one * 1.0f;
 
-			toyPrefab = ArrayPrefabs[i];
+			toyPrefab = ToysPanelsPrefabs[i];
 			toyPrefab.SetActive(false);
 		}
 
 		Image = ToysPanelsImage[index].transform.GetComponentInChildren<Image>(); 
 		Image.color = Color.yellow;
 		Image.transform.localScale = Vector3.one * 1.1f;
+
+		toyPrefab = ToysPanelsPrefabs[index];
+		toyPrefab.SetActive(true);
 
 		SelectionBullet(index);
 	}
@@ -75,9 +115,9 @@ public class ToyPanelView : MonoBehaviour
 		weapon = BulletCreator.GetComponent<Weapon>();
 
 		weapon.enabled = true;
-		weapon.bullet = ArrayPrefabs[index];
+		weapon.bullet = BulletPrefabs[index];
 		weapon.enabled = false;
 
-		ArrayPrefabs[index].SetActive(true);
+		BulletPrefabs[index].SetActive(true);
 	}
 }
