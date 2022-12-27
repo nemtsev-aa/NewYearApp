@@ -86,11 +86,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (modeIndex==1)
+        if (modeIndex==1 || modeIndex == 3)
         {
             Tree[0].SetActive(true);
-            Tree[1].SetActive(false);
-            
+            Tree[1].SetActive(false); 
         }
         else
         {

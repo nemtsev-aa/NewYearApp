@@ -6,6 +6,7 @@ public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private GameObject ViewObject;
+    [SerializeField] public bool Orientation;
 
     private float _oldMousePositionX;
     private float _oldMousePositionY;
@@ -18,68 +19,124 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        viewManager = GameObject.Find("/Cameras/View");
-        viewCamera = GameObject.Find("/Cameras/View/View").GetComponent<Camera>();
+        viewManager = ViewObject;
+        viewCamera = ViewObject.transform.GetChild(0).GetComponent<Camera>();
     }
 
     void LateUpdate()
     {
-        
-        if (Input.GetMouseButtonDown(0))
+        if (Orientation == true)
         {
-            _oldMousePositionX = Input.mousePosition.x;
-            _oldMousePositionY = Input.mousePosition.y;
-            Rotation(0);
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-
-            float deltaX = Input.mousePosition.x - _oldMousePositionX;
-            Debug.Log(deltaX);
-            float deltaY = Input.mousePosition.y - _oldMousePositionY;
-            Debug.Log(deltaY);
-
-            if (Mathf.Abs(deltaX) > 10f)
-            {   
-                Rotation(deltaX * 0.7f);
-            }
-           
-
-            if (deltaY > 10f)
+            if (Input.GetMouseButtonDown(0))
             {
-                UpMove(true);
+                _oldMousePositionX = Input.mousePosition.x;
+                _oldMousePositionY = Input.mousePosition.y;
+                Rotation(0);
             }
-            else
+
+            if (Input.GetMouseButton(0))
             {
-                UpMove(false);
+
+                float deltaX = Input.mousePosition.x - _oldMousePositionX;
+                Debug.Log(deltaX);
+                float deltaY = Input.mousePosition.y - _oldMousePositionY;
+                Debug.Log(deltaY);
+
+                if (Mathf.Abs(deltaX) > 10f)
+                {
+                    Rotation(deltaX * 0.7f);
+                }
+
+
+                if (deltaY > 10f)
+                {
+                    UpMove(true);
+                }
+                else
+                {
+                    UpMove(false);
+                }
+
+                //_oldMousePositionX = Input.mousePosition.x;
             }
 
-            //_oldMousePositionX = Input.mousePosition.x;
-        }
+            if (Input.GetMouseButtonUp(0))
+            {
+                Rotation(0);
+            }
 
-        if (Input.GetMouseButtonUp(0))
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+            if (scroll != 0.0f)
+            {
+
+                fieldOfView = viewCamera.fieldOfView;
+
+                fieldOfView += scroll * 10f;
+
+                fieldOfView = Mathf.Clamp(fieldOfView, 10f, 25f);
+
+                viewCamera.fieldOfView = fieldOfView;
+            } 
+        }
+        else
         {
-           Rotation(0);
+            if (Input.GetMouseButtonDown(0))
+            {
+                _oldMousePositionX = Input.mousePosition.x;
+                _oldMousePositionY = Input.mousePosition.y;
+                Rotation(0);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+
+                float deltaX = Input.mousePosition.x - _oldMousePositionX;
+                float deltaY = Input.mousePosition.y - _oldMousePositionY;
+                
+                if (Mathf.Abs(deltaX) > 10f)
+                {
+                    UpMove(true);
+                }
+                else
+                {
+                    UpMove(false);
+                }
+                
+                if (deltaY > 10f)
+                {
+                    Rotation(deltaX * 0.7f);
+                }
+
+
+                //_oldMousePositionX = Input.mousePosition.x;
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                Rotation(0);
+            }
+
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+
+            if (scroll != 0.0f)
+            {
+
+                fieldOfView = viewCamera.fieldOfView;
+
+                fieldOfView += scroll * 10f;
+
+                fieldOfView = Mathf.Clamp(fieldOfView, 10f, 25f);
+
+                viewCamera.fieldOfView = fieldOfView;
+            }
         }
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
 
-        if (scroll != 0.0f)
-        {
-
-            fieldOfView = viewCamera.fieldOfView;
-
-            fieldOfView += scroll * 10f;
-
-            fieldOfView = Mathf.Clamp(fieldOfView, 10f, 25f);
-
-            viewCamera.fieldOfView = fieldOfView;
-        }
     }
     private void Rotation(float speed)
     {
-        ViewObject.transform.Rotate(0, -Time.deltaTime * speed, 0);
+        viewManager.transform.Rotate(0, -Time.deltaTime * speed, 0);
     }
 
     public void UpMove(bool status)

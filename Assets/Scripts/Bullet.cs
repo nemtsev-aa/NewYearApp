@@ -5,10 +5,11 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public float bulletLife = 5f;
-    private bool IsActive = true;
     public GameObject markPrefab;
+    public GameObject EffectPrefab;
+
     private GameManager Manager;
-    
+    private bool IsActive = true;
     private void Start()
     {
         Manager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -30,9 +31,10 @@ public class Bullet : MonoBehaviour
 
             //замораживаем снаряд
             Destroy(newToy.GetComponent<Rigidbody>());
-
             Manager.createToyList.Add(newToy);
             Destroy(gameObject);
+            Instantiate(EffectPrefab, transform.position, transform.rotation);
+
         }
         else
         {
