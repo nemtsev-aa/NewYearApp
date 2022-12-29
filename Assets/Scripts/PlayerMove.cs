@@ -38,9 +38,9 @@ public class PlayerMove : MonoBehaviour
             {
 
                 float deltaX = Input.mousePosition.x - _oldMousePositionX;
-                Debug.Log(deltaX);
+                //Debug.Log(deltaX);
                 float deltaY = Input.mousePosition.y - _oldMousePositionY;
-                Debug.Log(deltaY);
+                //Debug.Log(deltaY);
 
                 if (Mathf.Abs(deltaX) > 10f)
                 {
@@ -152,7 +152,7 @@ public class PlayerMove : MonoBehaviour
             _eulerY = oldPosition.y - 0.5f * Time.deltaTime;
         }
 
-        viewManager.transform.position = new Vector3(viewManager.transform.position.x, Mathf.Clamp(_eulerY, -2f, -0.4f), viewManager.transform.position.z);
+        viewManager.transform.position = new Vector3(viewManager.transform.position.x, Mathf.Clamp(_eulerY, -1.7f, 0f), viewManager.transform.position.z);
 
     }
 }

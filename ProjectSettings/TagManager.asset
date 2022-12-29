@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Toy
+  - FxTemporaire
+  - StopCube
+  - StopShape
+  - Ground
   layers:
   - Default
   - TransparentFX

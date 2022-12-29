@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
         else if (Input.GetMouseButton(0))
         {
             float pos = cam.ScreenToWorldPoint(Input.mousePosition).x - StartPos.x;
-            targetPos = Mathf.Clamp(transform.position.x - pos, -0.25f, 0.25f);
+            targetPos = Mathf.Clamp(transform.position.x - pos, -0.40f, 0.40f);
         }
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPos, speed * Time.deltaTime), transform.position.y, transform.position.z);
     }

@@ -2,7 +2,8 @@
 
 namespace Eccentric {
     [ExecuteInEditMode]
-    public class BulletCreaterMove : MonoBehaviour {
+    public class BulletCreaterMove : MonoBehaviour 
+    {
 
         [Range(30f, 50f)]
         public float _mouseSensitivity;
@@ -12,6 +13,7 @@ namespace Eccentric {
 
         [SerializeField] FixedJoystick moveJoystick;
         [SerializeField] FixedJoystick rotateJoystick;
+        [SerializeField] StopMove stopMove;
 
         private Vector3 startCameraPosition;
         private Quaternion startCameraRotation;
@@ -26,13 +28,41 @@ namespace Eccentric {
             startCameraPosition = transform.position;
             startCameraRotation = transform.rotation;
         }
-        void LateUpdate() {
+        void LateUpdate()
+        {
+            if (stopMove.moveStatus == true)
+            {
+                Move();
+                Rotate();
+            }
+            else
+            {
+                if (transform.position.x < 2f && moveJoystick.Vertical > 0)
+                {
+                    transform.position = new Vector3(4f, transform.position.y, transform.position.z);
+                }
+                else if (transform.position.x > -2f && moveJoystick.Vertical < 0)
+                {
+                    transform.position = new Vector3(-4f, transform.position.y, transform.position.z);
+                }
+                else if (transform.position.z < 2f && moveJoystick.Horizontal > 0)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, 4f);
+                }
+                else if (transform.position.z < -2f && moveJoystick.Horizontal < 0)
+                {
+                    transform.position = new Vector3(transform.position.x, transform.position.y, -4f);
+                }
+                stopMove.moveStatus = true;
 
-            Move();
-            Rotate();
+                Rotate();
+            }
+
+           
+
+            
         }
-
-        void Move() 
+        void Move()
         {
             float right = moveJoystick.Horizontal;
             float forward = moveJoystick.Vertical;
@@ -60,7 +90,8 @@ namespace Eccentric {
             }
         }
 
-        void Rotate() {
+        void Rotate()
+        {
 
             if (rotateJoystick.Horizontal != 0f && rotateJoystick.Vertical != 0f)
             {
@@ -105,16 +136,16 @@ namespace Eccentric {
                 //transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z * 0f, 0f);
                 //transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, 0, 1f);
             }
- 
+
         }
-    
+
         public void ResetCameraPosition()
         {
             transform.position = startCameraPosition;
             transform.rotation = startCameraRotation;
         }
     }
-
 }
+
 
 

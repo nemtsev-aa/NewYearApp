@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum CreatorName { Иван, Артём, Софья, Вероника, Алёна, Елена, Юлия, Александр, Николай, Андрей }
+public enum CreatorName { Иван, Артём, Софья, Вероника, Алёна, Елена, Юлия, Александр, Николай, Андрей, Кирилл, Анастасия, Владимир, Евгений, Илья, Захар, Григорий}
 
 public class ColliderRay : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class ColliderRay : MonoBehaviour
         //viewManager = GameObject.Find("/Cameras/View/View");
         viewCamera = viewManager.GetComponent<Camera>();
         gameManager = GameObject.Find("GameManager");
-        creatorText = gameManager.GetComponent<GameManager>().CreatorText;
+        creatorText = gameManager.GetComponent<GameManager>().creatorText;
         outline = transform.GetComponent<Outline>();
 
     }

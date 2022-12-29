@@ -35,8 +35,7 @@ public class ToyPanelView : MonoBehaviour
             for (int index = 0; index  < child.transform.childCount; index ++)
             {
 				GameObject childObj = child.transform.GetChild(index).gameObject;
-				Debug.Log(childObj.name);
-
+				
 				string s1 = childObj.name;
 				string ch;
 				int indexOfChar;
@@ -46,7 +45,6 @@ public class ToyPanelView : MonoBehaviour
 					case 0:
 						ch = "Backgroung";
 						indexOfChar = s1.IndexOf(ch);
-						Debug.Log(indexOfChar);
 						if (indexOfChar == 0)
 						{
 							ToysPanelsImage[i] = childObj;
@@ -57,7 +55,6 @@ public class ToyPanelView : MonoBehaviour
 					case 2:
 						ch = "MenuJoy";
 						indexOfChar = s1.IndexOf(ch);
-						Debug.Log(indexOfChar);
 						if (indexOfChar == 0)
 						{
 							//ToysPanelsPrefabs[i] = childObj;
@@ -67,9 +64,6 @@ public class ToyPanelView : MonoBehaviour
 				}
             }
         }
-		Debug.Log("ToysPanelsImage " + ToysPanelsImage.Length);
-		//Debug.Log("ToysPanelsPrefabs " + ToysPanelsPrefabs.Length);
-		Debug.Log("BulletPrefabs " + BulletPrefabs.Length);
 	}
 
 	void Start() {
