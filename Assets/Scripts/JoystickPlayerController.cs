@@ -44,6 +44,26 @@ public class JoystickPlayerController : MonoBehaviour
         {
             transform.position += transform.right * _speed * Time.deltaTime;
         }
+
+
+
+        if (transform.position.x > 7f)
+        {
+            transform.position = new Vector3(7f, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.x < -7f)
+        {
+            transform.position = new Vector3(-7f, transform.position.y, transform.position.z);
+        }
+        else if (transform.position.z > 7f)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 7f);
+        }
+        else if (transform.position.z < -7f)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -7f);
+        }
+        
     }
 
     public void ResetPosition()

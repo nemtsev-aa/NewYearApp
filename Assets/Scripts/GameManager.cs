@@ -15,8 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject soundToggle;
 
     [SerializeField] public TextMeshProUGUI creatorText;
-    [SerializeField] public TextMeshProUGUI selectionToyIndex;
-    
+    [SerializeField] public TextMeshProUGUI scoreText;
+    [SerializeField] public Text scoreScreenText;
+
     [Header("Музыка")]
     [SerializeField] public bool sound;
 
@@ -30,15 +31,16 @@ public class GameManager : MonoBehaviour
     [Range(0, 3)]
     public int appMode;
 
+    [SerializeField] public GameObject izba;
+    [SerializeField] public GameObject rabbit;
+    
     private GameObject toysContent;
     private AudioManager audioManager;
-    private GameObject OnOffText;
 
     // Update is called once per frame
     private void Awake()
     {
         
-
         int i = 0;
 
         //Array to hold all child obj
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour
     {
         SwitchingMode(0);
         audioManager.SoundOn(0);
+
     }
 
     private void Update()
@@ -140,7 +143,7 @@ public class GameManager : MonoBehaviour
     
     public void ShowIndex(int index)
     {
-       selectionToyIndex.text = index.ToString();
+       scoreText.text = index.ToString();
     }
 
     public void StartVoting(int variant)
@@ -171,11 +174,28 @@ public class GameManager : MonoBehaviour
         }
 
         createToyList.Clear();
+        scoreText.text = createToyList.Count.ToString();
+        scoreScreenText.text = createToyList.Count.ToString();
+
+        izba.SetActive(false);
+        rabbit.SetActive(false);
+
     }
 
     public void AddToyToCollection(GameObject newToy)
     {
         createToyList.Add(newToy);
+        scoreText.text = createToyList.Count.ToString();
+        scoreScreenText.text = createToyList.Count.ToString();
+
+        if (createToyList.Count > 10)
+        {
+            rabbit.SetActive(true);
+        }
+        else if (createToyList.Count > 5)
+        {
+            izba.SetActive(true);
+        }
     }
 
     public void SoundOn()

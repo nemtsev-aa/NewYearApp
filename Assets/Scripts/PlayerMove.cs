@@ -7,7 +7,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private GameObject ViewObject;
     [SerializeField] public bool Orientation;
-
+    
     private float _oldMousePositionX;
     private float _oldMousePositionY;
     private float _eulerY;

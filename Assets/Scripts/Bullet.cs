@@ -31,8 +31,7 @@ public class Bullet : MonoBehaviour
 
             //замораживаем снаряд
             Destroy(newToy.GetComponent<Rigidbody>());
-            Manager.createToyList.Add(newToy);
-            Manager.selectionToyIndex.text = Manager.createToyList.Count.ToString();
+            Manager.AddToyToCollection(newToy);
 
             //Destroy(gameObject); 
         }
